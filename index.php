@@ -27,11 +27,11 @@ $query = $mysqli->query($sql_code) or die($mysqli->error);
             <option value=""></option>
             <?php 
             $select_state = $mysqli->real_escape_string($_GET['estado']);
-            $sql_code_cities = "SELECT * FROM cidades where id_estado = '$select_state'";
+            $sql_code_cities = "SELECT * FROM cidades where id_estado = '$select_state' ORDER BY nome ASC";
             $query_cities = $mysqli->query($sql_code_cities) or die($mysqli->error);
 
             while($cidade = $query_cities->fetch_assoc() ){ ?>
-                <option value=""><?php echo $cidade['id']?><?php echo $cidade['nome'];?></option>
+                <option value="<?php echo $cidade['id']; ?>"> <?php echo $cidade['nome'];?> </option>
             <?php } ?>
         </select>
         <?php } ?>
