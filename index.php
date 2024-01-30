@@ -14,18 +14,28 @@ $query = $mysqli->query($sql_code) or die($mysqli->error);
     <form method="GET">
         <select name="estado" required>
             <option value="">Selecione um estado</option>
-            <?php 
-            while($estado = $query->fetch_assoc()){?>
+            <?php while($estado = $query->fetch_assoc()){?>
             <option 
             <?php if(isset($_GET['estado']) && ($_GET['estado']) == $estado['id']) echo "selected"  ?>
             value="<?php echo $estado['id']?>"><?php echo $estado['nome']?></option>
             <?php } ?>
         </select>
+
+        
         <?php if(isset($_GET['estado'])){ ?>
         <select required name="cidade">
+            <option value=""></option>
+            <?php 
+            $select_state = $mysqli->real_escape_string($_GET['estado']);
+            $sql_code_cities = "SELECT * FROM cidades where id_estado = '$select_state'";
+            $query_cities = $mysqli->query($sql_code_cities) or die($mysqli->error);
 
+            while($cidade = $query_cities->fetch_assoc() ){ ?>
+                <option value=""><?php echo $cidade['id']?><?php echo $cidade['nome'];?></option>
+            <?php } ?>
         </select>
         <?php } ?>
+
         <button type="submit">Avançar</button>
     </form>
 </body>
